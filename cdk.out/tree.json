@@ -33,10 +33,7 @@
                         "key": "aws-cdk:cr-owned:4dd050fa",
                         "value": "true"
                       }
-                    ],
-                    "websiteConfiguration": {
-                      "indexDocument": "index.html"
-                    }
+                    ]
                   }
                 },
                 "constructInfo": {
@@ -150,47 +147,7 @@
                                         },
                                         ":distribution/",
                                         {
-                                          "Ref": "WebAppDistributionbeta085C5785"
-                                        }
-                                      ]
-                                    ]
-                                  }
-                                }
-                              },
-                              "Effect": "Allow",
-                              "Principal": {
-                                "Service": "cloudfront.amazonaws.com"
-                              },
-                              "Resource": {
-                                "Fn::Join": [
-                                  "",
-                                  [
-                                    {
-                                      "Fn::GetAtt": [
-                                        "WebAppBucketbetaD59743ED",
-                                        "Arn"
-                                      ]
-                                    },
-                                    "/*"
-                                  ]
-                                ]
-                              }
-                            },
-                            {
-                              "Action": [
-                                "s3:GetObject",
-                                "s3:PutObject",
-                                "s3:DeleteObject"
-                              ],
-                              "Condition": {
-                                "StringEquals": {
-                                  "AWS:SourceArn": {
-                                    "Fn::Join": [
-                                      "",
-                                      [
-                                        "arn:aws:cloudfront::717186461846:distribution/",
-                                        {
-                                          "Ref": "WebAppDistributionbeta085C5785"
+                                          "Ref": "MyDistribution6271DFB5"
                                         }
                                       ]
                                     ]
@@ -293,45 +250,43 @@
               "version": "2.184.1"
             }
           },
-          "WebAppDistribution-beta": {
-            "id": "WebAppDistribution-beta",
-            "path": "WebAppStack-Beta/WebAppDistribution-beta",
+          "MyOAC": {
+            "id": "MyOAC",
+            "path": "WebAppStack-Beta/MyOAC",
             "children": {
-              "Origin1": {
-                "id": "Origin1",
-                "path": "WebAppStack-Beta/WebAppDistribution-beta/Origin1",
-                "children": {
-                  "S3OriginAccessControl": {
-                    "id": "S3OriginAccessControl",
-                    "path": "WebAppStack-Beta/WebAppDistribution-beta/Origin1/S3OriginAccessControl",
-                    "children": {
-                      "Resource": {
-                        "id": "Resource",
-                        "path": "WebAppStack-Beta/WebAppDistribution-beta/Origin1/S3OriginAccessControl/Resource",
-                        "attributes": {
-                          "aws:cdk:cloudformation:type": "AWS::CloudFront::OriginAccessControl",
-                          "aws:cdk:cloudformation:props": {
-                            "originAccessControlConfig": {
-                              "name": "WebAppStackBetaWebAppDistribOrigin1S3OriginAccessControl65313714",
-                              "signingBehavior": "always",
-                              "signingProtocol": "sigv4",
-                              "originAccessControlOriginType": "s3"
-                            }
-                          }
-                        },
-                        "constructInfo": {
-                          "fqn": "aws-cdk-lib.aws_cloudfront.CfnOriginAccessControl",
-                          "version": "2.184.1"
-                        }
-                      }
-                    },
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_cloudfront.S3OriginAccessControl",
-                      "version": "2.184.1",
-                      "metadata": []
+              "Resource": {
+                "id": "Resource",
+                "path": "WebAppStack-Beta/MyOAC/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::CloudFront::OriginAccessControl",
+                  "aws:cdk:cloudformation:props": {
+                    "originAccessControlConfig": {
+                      "name": "WebAppStackBetaMyOAC2120D683",
+                      "signingBehavior": "always",
+                      "signingProtocol": "sigv4",
+                      "originAccessControlOriginType": "s3"
                     }
                   }
                 },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_cloudfront.CfnOriginAccessControl",
+                  "version": "2.184.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_cloudfront.S3OriginAccessControl",
+              "version": "2.184.1",
+              "metadata": []
+            }
+          },
+          "MyDistribution": {
+            "id": "MyDistribution",
+            "path": "WebAppStack-Beta/MyDistribution",
+            "children": {
+              "Origin1": {
+                "id": "Origin1",
+                "path": "WebAppStack-Beta/MyDistribution/Origin1",
                 "constructInfo": {
                   "fqn": "constructs.Construct",
                   "version": "10.4.2"
@@ -339,7 +294,7 @@
               },
               "Resource": {
                 "id": "Resource",
-                "path": "WebAppStack-Beta/WebAppDistribution-beta/Resource",
+                "path": "WebAppStack-Beta/MyDistribution/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::CloudFront::Distribution",
                   "aws:cdk:cloudformation:props": {
@@ -353,13 +308,13 @@
                               "RegionalDomainName"
                             ]
                           },
-                          "id": "WebAppStackBetaWebAppDistributionbetaOrigin19296B8EE",
+                          "id": "WebAppStackBetaMyDistributionOrigin1BFF53590",
                           "s3OriginConfig": {
                             "originAccessIdentity": ""
                           },
                           "originAccessControlId": {
                             "Fn::GetAtt": [
-                              "WebAppDistributionbetaOrigin1S3OriginAccessControl273AEA06",
+                              "MyOAC2C0729C0",
                               "Id"
                             ]
                           }
@@ -367,11 +322,12 @@
                       ],
                       "defaultCacheBehavior": {
                         "pathPattern": "*",
-                        "targetOriginId": "WebAppStackBetaWebAppDistributionbetaOrigin19296B8EE",
+                        "targetOriginId": "WebAppStackBetaMyDistributionOrigin1BFF53590",
                         "cachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
                         "compress": true,
-                        "viewerProtocolPolicy": "allow-all"
+                        "viewerProtocolPolicy": "redirect-to-https"
                       },
+                      "defaultRootObject": "index.html",
                       "httpVersion": "http2",
                       "ipv6Enabled": true
                     }
@@ -830,10 +786,7 @@
                         "key": "aws-cdk:cr-owned:e3a6e4d9",
                         "value": "true"
                       }
-                    ],
-                    "websiteConfiguration": {
-                      "indexDocument": "index.html"
-                    }
+                    ]
                   }
                 },
                 "constructInfo": {
@@ -908,47 +861,7 @@
                                         },
                                         ":distribution/",
                                         {
-                                          "Ref": "WebAppDistributionprodDF8EC3CA"
-                                        }
-                                      ]
-                                    ]
-                                  }
-                                }
-                              },
-                              "Effect": "Allow",
-                              "Principal": {
-                                "Service": "cloudfront.amazonaws.com"
-                              },
-                              "Resource": {
-                                "Fn::Join": [
-                                  "",
-                                  [
-                                    {
-                                      "Fn::GetAtt": [
-                                        "WebAppBucketprodCC3EDFFF",
-                                        "Arn"
-                                      ]
-                                    },
-                                    "/*"
-                                  ]
-                                ]
-                              }
-                            },
-                            {
-                              "Action": [
-                                "s3:GetObject",
-                                "s3:PutObject",
-                                "s3:DeleteObject"
-                              ],
-                              "Condition": {
-                                "StringEquals": {
-                                  "AWS:SourceArn": {
-                                    "Fn::Join": [
-                                      "",
-                                      [
-                                        "arn:aws:cloudfront::717186461846:distribution/",
-                                        {
-                                          "Ref": "WebAppDistributionprodDF8EC3CA"
+                                          "Ref": "MyDistribution6271DFB5"
                                         }
                                       ]
                                     ]
@@ -998,45 +911,43 @@
               "metadata": []
             }
           },
-          "WebAppDistribution-prod": {
-            "id": "WebAppDistribution-prod",
-            "path": "WebAppStack-Prod/WebAppDistribution-prod",
+          "MyOAC": {
+            "id": "MyOAC",
+            "path": "WebAppStack-Prod/MyOAC",
             "children": {
-              "Origin1": {
-                "id": "Origin1",
-                "path": "WebAppStack-Prod/WebAppDistribution-prod/Origin1",
-                "children": {
-                  "S3OriginAccessControl": {
-                    "id": "S3OriginAccessControl",
-                    "path": "WebAppStack-Prod/WebAppDistribution-prod/Origin1/S3OriginAccessControl",
-                    "children": {
-                      "Resource": {
-                        "id": "Resource",
-                        "path": "WebAppStack-Prod/WebAppDistribution-prod/Origin1/S3OriginAccessControl/Resource",
-                        "attributes": {
-                          "aws:cdk:cloudformation:type": "AWS::CloudFront::OriginAccessControl",
-                          "aws:cdk:cloudformation:props": {
-                            "originAccessControlConfig": {
-                              "name": "WebAppStackProdWebAppDistribOrigin1S3OriginAccessControlA0C444A5",
-                              "signingBehavior": "always",
-                              "signingProtocol": "sigv4",
-                              "originAccessControlOriginType": "s3"
-                            }
-                          }
-                        },
-                        "constructInfo": {
-                          "fqn": "aws-cdk-lib.aws_cloudfront.CfnOriginAccessControl",
-                          "version": "2.184.1"
-                        }
-                      }
-                    },
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_cloudfront.S3OriginAccessControl",
-                      "version": "2.184.1",
-                      "metadata": []
+              "Resource": {
+                "id": "Resource",
+                "path": "WebAppStack-Prod/MyOAC/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::CloudFront::OriginAccessControl",
+                  "aws:cdk:cloudformation:props": {
+                    "originAccessControlConfig": {
+                      "name": "WebAppStackProdMyOACBBE7F85E",
+                      "signingBehavior": "always",
+                      "signingProtocol": "sigv4",
+                      "originAccessControlOriginType": "s3"
                     }
                   }
                 },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_cloudfront.CfnOriginAccessControl",
+                  "version": "2.184.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_cloudfront.S3OriginAccessControl",
+              "version": "2.184.1",
+              "metadata": []
+            }
+          },
+          "MyDistribution": {
+            "id": "MyDistribution",
+            "path": "WebAppStack-Prod/MyDistribution",
+            "children": {
+              "Origin1": {
+                "id": "Origin1",
+                "path": "WebAppStack-Prod/MyDistribution/Origin1",
                 "constructInfo": {
                   "fqn": "constructs.Construct",
                   "version": "10.4.2"
@@ -1044,7 +955,7 @@
               },
               "Resource": {
                 "id": "Resource",
-                "path": "WebAppStack-Prod/WebAppDistribution-prod/Resource",
+                "path": "WebAppStack-Prod/MyDistribution/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::CloudFront::Distribution",
                   "aws:cdk:cloudformation:props": {
@@ -1058,13 +969,13 @@
                               "RegionalDomainName"
                             ]
                           },
-                          "id": "WebAppStackProdWebAppDistributionprodOrigin10D5AB5FE",
+                          "id": "WebAppStackProdMyDistributionOrigin172F8058B",
                           "s3OriginConfig": {
                             "originAccessIdentity": ""
                           },
                           "originAccessControlId": {
                             "Fn::GetAtt": [
-                              "WebAppDistributionprodOrigin1S3OriginAccessControl9AA3667E",
+                              "MyOAC2C0729C0",
                               "Id"
                             ]
                           }
@@ -1072,11 +983,12 @@
                       ],
                       "defaultCacheBehavior": {
                         "pathPattern": "*",
-                        "targetOriginId": "WebAppStackProdWebAppDistributionprodOrigin10D5AB5FE",
+                        "targetOriginId": "WebAppStackProdMyDistributionOrigin172F8058B",
                         "cachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
                         "compress": true,
-                        "viewerProtocolPolicy": "allow-all"
+                        "viewerProtocolPolicy": "redirect-to-https"
                       },
+                      "defaultRootObject": "index.html",
                       "httpVersion": "http2",
                       "ipv6Enabled": true
                     }

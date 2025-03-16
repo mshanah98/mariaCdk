@@ -18,7 +18,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::717186461846:role/cdk-hnb659fds-deploy-role-717186461846-us-west-2",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::717186461846:role/cdk-hnb659fds-cfn-exec-role-717186461846-us-west-2",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-717186461846-us-west-2/a93ed4f48b424d6d2eff48ad5b2504d42eec31d3f4d51debb531d182d288f42d.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-717186461846-us-west-2/f0b5548ca9fba23fc61b23debffa60a4206eb5d5cbd47383e0db69d348390986.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -70,16 +70,16 @@
             "data": "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F"
           }
         ],
-        "/WebAppStack-Beta/WebAppDistribution-beta/Origin1/S3OriginAccessControl/Resource": [
+        "/WebAppStack-Beta/MyOAC/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "WebAppDistributionbetaOrigin1S3OriginAccessControl273AEA06"
+            "data": "MyOAC2C0729C0"
           }
         ],
-        "/WebAppStack-Beta/WebAppDistribution-beta/Resource": [
+        "/WebAppStack-Beta/MyDistribution/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "WebAppDistributionbeta085C5785"
+            "data": "MyDistribution6271DFB5"
           }
         ],
         "/WebAppStack-Beta/DeployWebApp-beta/AwsCliLayer/Resource": [
@@ -166,7 +166,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::717186461846:role/cdk-hnb659fds-deploy-role-717186461846-us-east-1",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::717186461846:role/cdk-hnb659fds-cfn-exec-role-717186461846-us-east-1",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-717186461846-us-east-1/5c5a68b08c4c3f2b751f61c64fe355b9b14fcf9bfc6ff9eee217e5be3ec5ec90.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-717186461846-us-east-1/c5c0d2179f51a0770440aa32b7586a47b8e552f0d2df2ac3289ce8a64ca224e8.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -194,16 +194,16 @@
             "data": "WebAppBucketprodPolicy6F60D9B9"
           }
         ],
-        "/WebAppStack-Prod/WebAppDistribution-prod/Origin1/S3OriginAccessControl/Resource": [
+        "/WebAppStack-Prod/MyOAC/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "WebAppDistributionprodOrigin1S3OriginAccessControl9AA3667E"
+            "data": "MyOAC2C0729C0"
           }
         ],
-        "/WebAppStack-Prod/WebAppDistribution-prod/Resource": [
+        "/WebAppStack-Prod/MyDistribution/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "WebAppDistributionprodDF8EC3CA"
+            "data": "MyDistribution6271DFB5"
           }
         ],
         "/WebAppStack-Prod/DeployWebApp-prod/AwsCliLayer/Resource": [

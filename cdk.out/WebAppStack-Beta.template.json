@@ -18,10 +18,7 @@
       "Key": "aws-cdk:cr-owned:4dd050fa",
       "Value": "true"
      }
-    ],
-    "WebsiteConfiguration": {
-     "IndexDocument": "index.html"
-    }
+    ]
    },
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
@@ -128,47 +125,7 @@
             },
             ":distribution/",
             {
-             "Ref": "WebAppDistributionbeta085C5785"
-            }
-           ]
-          ]
-         }
-        }
-       },
-       "Effect": "Allow",
-       "Principal": {
-        "Service": "cloudfront.amazonaws.com"
-       },
-       "Resource": {
-        "Fn::Join": [
-         "",
-         [
-          {
-           "Fn::GetAtt": [
-            "WebAppBucketbetaD59743ED",
-            "Arn"
-           ]
-          },
-          "/*"
-         ]
-        ]
-       }
-      },
-      {
-       "Action": [
-        "s3:GetObject",
-        "s3:PutObject",
-        "s3:DeleteObject"
-       ],
-       "Condition": {
-        "StringEquals": {
-         "AWS:SourceArn": {
-          "Fn::Join": [
-           "",
-           [
-            "arn:aws:cloudfront::717186461846:distribution/",
-            {
-             "Ref": "WebAppDistributionbeta085C5785"
+             "Ref": "MyDistribution6271DFB5"
             }
            ]
           ]
@@ -288,30 +245,31 @@
     "aws:asset:property": "Code"
    }
   },
-  "WebAppDistributionbetaOrigin1S3OriginAccessControl273AEA06": {
+  "MyOAC2C0729C0": {
    "Type": "AWS::CloudFront::OriginAccessControl",
    "Properties": {
     "OriginAccessControlConfig": {
-     "Name": "WebAppStackBetaWebAppDistribOrigin1S3OriginAccessControl65313714",
+     "Name": "WebAppStackBetaMyOAC2120D683",
      "OriginAccessControlOriginType": "s3",
      "SigningBehavior": "always",
      "SigningProtocol": "sigv4"
     }
    },
    "Metadata": {
-    "aws:cdk:path": "WebAppStack-Beta/WebAppDistribution-beta/Origin1/S3OriginAccessControl/Resource"
+    "aws:cdk:path": "WebAppStack-Beta/MyOAC/Resource"
    }
   },
-  "WebAppDistributionbeta085C5785": {
+  "MyDistribution6271DFB5": {
    "Type": "AWS::CloudFront::Distribution",
    "Properties": {
     "DistributionConfig": {
      "DefaultCacheBehavior": {
       "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
       "Compress": true,
-      "TargetOriginId": "WebAppStackBetaWebAppDistributionbetaOrigin19296B8EE",
-      "ViewerProtocolPolicy": "allow-all"
+      "TargetOriginId": "WebAppStackBetaMyDistributionOrigin1BFF53590",
+      "ViewerProtocolPolicy": "redirect-to-https"
      },
+     "DefaultRootObject": "index.html",
      "Enabled": true,
      "HttpVersion": "http2",
      "IPV6Enabled": true,
@@ -323,10 +281,10 @@
          "RegionalDomainName"
         ]
        },
-       "Id": "WebAppStackBetaWebAppDistributionbetaOrigin19296B8EE",
+       "Id": "WebAppStackBetaMyDistributionOrigin1BFF53590",
        "OriginAccessControlId": {
         "Fn::GetAtt": [
-         "WebAppDistributionbetaOrigin1S3OriginAccessControl273AEA06",
+         "MyOAC2C0729C0",
          "Id"
         ]
        },
@@ -338,7 +296,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "WebAppStack-Beta/WebAppDistribution-beta/Resource"
+    "aws:cdk:path": "WebAppStack-Beta/MyDistribution/Resource"
    }
   },
   "DeployWebAppbetaAwsCliLayer74009A5B": {
@@ -377,7 +335,7 @@
     },
     "Prune": true,
     "DistributionId": {
-     "Ref": "WebAppDistributionbeta085C5785"
+     "Ref": "MyDistribution6271DFB5"
     },
     "DistributionPaths": [
      "/*"
@@ -563,7 +521,7 @@
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/3WQQW/CMAyFfwv34AHdYVco4jQJBNKuVUjdypAmKHaoUNT/PrVFhR12es/PifPFK1h+fcJypluem/I6t3SGdBJtrkq3XCTOIG2iuaKovHJPN8rBWzKPV/ysx2KjGTtlrI9lFbwTSFtiCXSOQt6pU7YPVJNbG4PMuXcSvO1H/RO/X+4UZ0Uq8Wb9o0EnML64nQKlmVEY1r10yurmXGpIeeW+9QPDDwYeGMjVFsW7XXRmoJpMXk1hp0g3kI7eYh8P+vr56LpO5ZHFN0dkH4MZT07+T+sQ/J1KDP2C1EB4El2Tq5+che0ZC92ysQTrlnNLA7Z6H76PcovSKedLhAt/3FcZLBewmF2YaB6iE2oQjqP+AhvNT9/kAQAA"
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/21QyW7CMBD9lt7NFEgPvUJQT5VAROo1Ms4kGnBs5LGJkOV/r5ygQKWe3uJZnmcNq88PWL3JgRequSw0nSBWXqqLkAPXkQuI26Au6EXZmgeb4GA1qfvTfuhJbCVjEkrb0LTOGg+xKvaOOjIbpZC5tMY7q3P3f/aO2Ds6BU/W5JpXnQQXdWzwqu29R+Nh2ribDSGZ0TNsMiShZX9qJMSyNd/yju4HHeexFZlOo7fmKxg1LppJ2c5mEiR7iEerMdsjPn8+sZREGdjb/ohsg1NT5cz/PB2cvVGDLh9IjAkrLzsy3SNnrXPGWg6sNMFm4FLTGFu8Dt8Hfw0+CWMbhDO/39YFrJawfDsz0cIF46lHOE74C/b8sIrkAQAA"
    },
    "Metadata": {
     "aws:cdk:path": "WebAppStack-Beta/CDKMetadata/Default"
@@ -574,7 +532,7 @@
   "DistributionURL": {
    "Value": {
     "Fn::GetAtt": [
-     "WebAppDistributionbeta085C5785",
+     "MyDistribution6271DFB5",
      "DomainName"
     ]
    }
