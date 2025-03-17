@@ -1,4 +1,6 @@
-import { Stack, StackProps, SecretValue, Stage, CfnOutput, pipelines, RemovalPolicy } from 'aws-cdk-lib';
+import { Stack, StackProps, SecretValue, Stage, CfnOutput, pipelines, RemovalPolicy, Fn } from 'aws-cdk-lib';
+import * as ssm from 'aws-cdk-lib/aws-ssm';
+import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
 import { Construct } from 'constructs';
 import * as codepipeline from 'aws-cdk-lib/aws-codepipeline';
 import * as codepipeline_actions from 'aws-cdk-lib/aws-codepipeline-actions';
@@ -8,9 +10,15 @@ import { Pipeline, Artifact } from 'aws-cdk-lib/aws-codepipeline';
 import * as sns from 'aws-cdk-lib/aws-sns';
 import { GitHubSourceAction, ManualApprovalAction, CloudFormationCreateUpdateStackAction } from 'aws-cdk-lib/aws-codepipeline-actions';
 import { LinuxBuildImage } from 'aws-cdk-lib/aws-codebuild';
+import { Distribution } from 'aws-cdk-lib/aws-logs';
+import { S3Bucket } from 'aws-cdk-lib/aws-kinesisfirehose';
 
+interface PipelineStackProps extends StackProps {
+  readonly betaBucket: s3.IBucket;
+  readonly prodBucket: s3.IBucket;
+}
 export class PipelineStack extends Stack {
-  constructor(scope: Construct, id: string, props?: StackProps) {
+  constructor(scope: Construct, id: string, props: PipelineStackProps) {
     super(scope, id, props);
 
     const cdkSourceArtifact = new codepipeline.Artifact();
@@ -73,7 +81,7 @@ export class PipelineStack extends Stack {
       // Deploy to Beta
     const betaDeployAction = new codepipeline_actions.S3DeployAction({
         actionName: 'DeployBeta',
-        bucket: new s3.Bucket(this, 'BetaBucket'),
+        bucket: props.betaBucket,
         input: webAppBuildArtifact,
       });
   
@@ -89,7 +97,7 @@ export class PipelineStack extends Stack {
       // Deploy to Production
     const prodDeployAction = new codepipeline_actions.S3DeployAction({
         actionName: 'DeployProduction',
-        bucket: new s3.Bucket(this, 'ProdBucket'),
+        bucket: props.prodBucket,
         input: webAppBuildArtifact,
       });
   

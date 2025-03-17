@@ -1,4 +1,4 @@
-import { App, RemovalPolicy, Stack, StackProps, CfnOutput, aws_iam as iam } from 'aws-cdk-lib';
+import { App, RemovalPolicy, Stack, StackProps, CfnOutput, aws_iam as iam, aws_ssm as ssm } from 'aws-cdk-lib';
 import * as path from 'path';
 import { Construct } from 'constructs';
 import { BlockPublicAccess, Bucket, CfnBucketPolicy } from 'aws-cdk-lib/aws-s3';
@@ -12,11 +12,14 @@ interface WebAppStackProps extends StackProps {
 }
 
 export class Webstack extends Stack {
+  public readonly siteBucket: Bucket;
+
   constructor(scope: Construct, id: string, props: WebAppStackProps) {
     super(scope, id, props);
 
     // ✅ 1️⃣ Create the S3 Bucket First
     const siteBucket = new Bucket(this, `WebAppBucket-${props.stage}`, {
+      bucketName: `mariia-webapp-${props.stage}`,
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
       removalPolicy: props.stage === 'prod' ? RemovalPolicy.RETAIN : RemovalPolicy.DESTROY,
       autoDeleteObjects: props.stage !== 'prod',
@@ -41,10 +44,6 @@ export class Webstack extends Stack {
       distribution,
       distributionPaths: ['/*'],
     });
-
-    // ✅ 7️⃣ Output CloudFront Distribution URL
-    new CfnOutput(this, 'DistributionURL', {
-      value: distribution.distributionDomainName,
-    });
+    this.siteBucket = siteBucket;
   }
 }
